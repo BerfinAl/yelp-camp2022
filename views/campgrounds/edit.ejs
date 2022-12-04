@@ -1,0 +1,80 @@
+<% layout("./layouts/boilerplate") %>
+    <link rel="stylesheet" href="/stylesheets/images.css" class="rel">
+    <div class="row">
+        <h1 class="text-center">New Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/<%= foundCampground._id %>?_method=PUT" method="post" class="validated-form"
+                enctype="multipart/form-data" novalidate>
+                <div class="mb-3"><label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]"
+                        value="<%= foundCampground.title %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="campground[location]"
+                        value="<%= foundCampground.location %>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" name="campground[price]" id="price" class="form-control" placeholder="0.0"
+                            aria-label="price" aria-describedby="price-label" value="<%= foundCampground.price %>"
+                            required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]"
+                        required><%= foundCampground.description %></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Add Image(s)</label>
+                    <div class="form-file custom-file">
+                        <input class="form-control custom-file-input" type="file" name="campground[images]" id="image"
+                            onchange="previewMultiple(event)" multiple>
+                        <label for="image" class="form-label custom-file-label"></label>
+                    </div>
+                </div>
+                <div id="formFile"></div>
+                <div class="mb-3">
+                    <h5> Delete Images </h5>
+                    <div class="row row-cols-1 row-cols-md-4 g-4 mb-3">
+                        <% foundCampground.images.forEach((image, index)=> { %>
+                            <div class="col">
+                                <div class="card">
+                                    <img class="card-img" src="<%= image.thumbnail %>" alt="">
+                                    <div class="card-img-overlay text-end pt-1 pe-2">
+                                        <label class="visually-hidden" for="image-<%=index%>">Delete Image</label>
+                                        <input class="form-check-input" type="checkbox" name="deleteImages[]"
+                                            value="<%= image.filename %>" id="image-<%= index%>">
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary">Update Campground</button>
+                </div>
+            </form>
+            <form action="/campgrounds/<%= foundCampground._id %>?_method=DELETE" method="post">
+                <button class="btn btn-danger">Delete campground</button>
+            </form>
+            <div class="my-2">
+                <a href="/campgrounds/<%= foundCampground._id %> " class="card-link">Back to campground</a>
+            </div>
+        </div>
+    </div>
