@@ -60,7 +60,7 @@ campgroundSchema.post("findOneAndDelete", async function (campground) {
 
 campgroundSchema.virtual("properties.popupMarkup").get(function (){
     return `
-        <b> <a href="http://localhost:3000/campgrounds/${this._id}"> ${this.title} </a> </b> 
+        <b> <a href="/campgrounds/${this._id}"> ${this.title} </a> </b> 
         <p>${this.description.slice(0,50)}... </p>`
 })
 
