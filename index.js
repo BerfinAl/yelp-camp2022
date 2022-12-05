@@ -18,7 +18,6 @@ const User = require("./models/user")
 const helmet = require("helmet")
 const mongoSanitize = require("express-mongo-sanitize")
 
-
 const userRoutes = require("./routes/user")
 const campgroundRoutes = require("./routes/campground")
 const reviewRoutes = require("./routes/review")
@@ -31,12 +30,6 @@ db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => console.log("database connected"))
 
 const app = express();
-const paginate = require('express-paginate');
-
-
-app.use(paginate.middleware(10, 50));
-
- 
 
 app.engine("ejs", ejsMate)
 app.set("view engine", "ejs");
