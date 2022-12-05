@@ -73,3 +73,6 @@ exports.isReviewAuthor = async (req,res,next) => {
         return res.redirect(`/campgrounds/${id}`)
     } next()
 }
+
+
+ 

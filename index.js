@@ -18,6 +18,7 @@ const User = require("./models/user")
 const helmet = require("helmet")
 const mongoSanitize = require("express-mongo-sanitize")
 
+
 const userRoutes = require("./routes/user")
 const campgroundRoutes = require("./routes/campground")
 const reviewRoutes = require("./routes/review")
@@ -30,6 +31,12 @@ db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => console.log("database connected"))
 
 const app = express();
+const paginate = require('express-paginate');
+
+
+app.use(paginate.middleware(10, 50));
+
+ 
 
 app.engine("ejs", ejsMate)
 app.set("view engine", "ejs");
@@ -66,6 +73,7 @@ app.use(session({
 }))
 app.use(flash())
 
+
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
     "https://api.tiles.mapbox.com/",
@@ -73,7 +81,7 @@ const scriptSrcUrls = [
     "https://kit.fontawesome.com/",
     "https://cdnjs.cloudflare.com/",
     "https://cdn.jsdelivr.net/",
-    "https://res.cloudinary.com/dv5vm4sqh/"
+    "https://res.cloudinary.com/dv5vm4sqh/",
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com/",

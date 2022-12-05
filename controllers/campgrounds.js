@@ -4,7 +4,7 @@ const mapBoxToken = process.env.MAPBOX_TOKEN
 const geocodingClient = mbxGeocoding({accessToken : mapBoxToken})
 const {cloudinary} = require("../cloudinary") 
 
-exports.index = async (req, res) => {
+exports.index = async (req, res,) => {
     const campgrounds = await Campground.find({});
     res.render("campgrounds/index", { campgrounds })
 };
