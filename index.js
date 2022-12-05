@@ -35,7 +35,7 @@ app.engine("ejs", ejsMate)
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(mongoSanitize())
+app.use(mongoSanitize({ replaceWith: "_"}))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -43,23 +43,25 @@ app.use(morgan("dev"))
 
 const secret = process.env.SECRET || "secret123";
 
-app.use(session({
-    name: "session",
-    secret,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
+const store =  MongoStore.create({
         mongoUrl: dbUrl,
         touchAfter: 24 * 60 * 60, //seconds
         crypto: {
-            secret,
+         secret,
         }
-    }),
+});
+
+app.use(session({
+    name: "session",
+    store,
+    secret,
+    resave: false,
+    saveUninitialized: true,
     cookie: {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // miliseconds
         maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        // secure: process.env.NODE_ENV === 'production',
     }
 }))
 app.use(flash())
@@ -148,8 +150,8 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = "Something went wrong";
     res.status(statusCode).render("error", { err });
 })
-const port = process.env.PORT || 3000
 
+const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log(`Serving on ${port}`)
 })

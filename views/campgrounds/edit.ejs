@@ -1,6 +1,7 @@
 <% layout("./layouts/boilerplate") %>
-    <link rel="stylesheet" href="/stylesheets/images.css" class="rel">
-    <div class="row">
+ <link rel="stylesheet" href="/stylesheets/images.css" class="rel">
+<main class="container mt-5">
+ <div class="row">
         <h1 class="text-center">New Campground</h1>
         <div class="col-6 offset-3">
             <form action="/campgrounds/<%= foundCampground._id %>?_method=PUT" method="post" class="validated-form"
@@ -78,3 +79,6 @@
             </div>
         </div>
     </div>
+</main>
+   
+   
